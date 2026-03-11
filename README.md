@@ -1,6 +1,6 @@
 # Transaction Ingestion Console Application
 
-## Overview
+# Overview
 
 This project implements a .NET console application that ingests transaction data from a mocked JSON feed and stores it in a SQLite database using Entity Framework Core.
 
@@ -25,6 +25,7 @@ The solution also includes automated tests to verify key behaviors such as inser
 
 # Project Structure
 
+```
 TransactionsIngest
 │
 ├── TransactionsIngest.App
@@ -62,6 +63,7 @@ TransactionsIngest
 │ └── TransactionIngestionServiceTests.cs
 │
 └── README.md
+```
 
 # Database Design
 
@@ -140,6 +142,7 @@ Finalized transactions represent records that are no longer expected to change.
 
 Running the ingestion multiple times with the same snapshot does not create duplicates.
 
+```
 Example:
 
 First run:
@@ -155,8 +158,9 @@ Updated: 0
 Revoked: 0
 Finalized: 0
 No Change: 2
+```
 
-# Mock Transaction Feed
+## Mock Transaction Feed
 
 Since the real API is unavailable, the application uses a mocked JSON file:
 TransactionsIngest.App/MockData/transactions.json
@@ -184,14 +188,17 @@ Example:
 ]
 ```
 
-## How to Run the Application
+# How to Run the Application
 
 Open a terminal in the project root and run:
 
+```
 dotnet restore
 dotnet build
 dotnet run --project TransactionsIngest.App
+```
 
+```
 Example Output:
 Ingestion run completed.
 Inserted: 2
@@ -199,65 +206,79 @@ Updated: 0
 Revoked: 0
 Finalized: 0
 No Change: 0
+```
 
-## Running Automated Tests
+# Running Automated Tests
 
 The project includes xUnit tests that verify key ingestion behaviors.
 
 To run tests:
-dotnet test
 
+```
+dotnet test
+```
+
+```
 Example Output:
 Test summary: total: 4
 Passed: 4
 Failed: 0
+```
 
 The tests cover:
 
+```
 inserting new transactions
 updating transactions when fields change
 revoking missing transactions
 idempotent ingestion behavior
+```
 
-## Design Decisions
+# Design Decisions
 
-# Transaction ID
+## Transaction ID
 
 TransactionId is treated as a business identifier rather than a database primary key.
 
-# Card Data Storage
+## Card Data Storage
 
 Only the last 4 digits of the card number are stored to avoid persisting full card numbers.
 
-# Database Transactions
+## Database Transactions
 
 Each ingestion run is wrapped in a single database transaction to ensure data consistency.
 
-# EF Core Code-First
+## EF Core Code-First
 
 The database schema is created using Entity Framework Core migrations/code-first.
 
-# SQLite
+## SQLite
 
 SQLite was selected because it is lightweight and easy to run locally without requiring a server.
 
-## Assumptions
+# Assumptions
 
+```
 The mocked JSON file represents a snapshot of the last 24 hours of transactions.
 Missing transactions within the 24-hour window indicate revocations.
 Transactions older than 24 hours may be finalized.
 The system is designed to run repeatedly without creating duplicate records.
+```
 
-## Useful Commands to run in terminal
+# Useful Commands to run in terminal
 
-# Build project
+## Build project
 
 dotnet build
 
-# Run application
+## Run application
 
 dotnet run --project TransactionsIngest.App
 
-# Run tests
+## Run tests
 
 dotnet test
+
+---
+
+### End of Content
