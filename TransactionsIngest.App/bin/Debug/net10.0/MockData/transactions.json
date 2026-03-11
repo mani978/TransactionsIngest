@@ -1,0 +1,10 @@
+[
+  {
+    "transactionId": 1001,
+    "cardNumber": "4111111111111111",
+    "locationCode": "STO-01",
+    "productName": "Wireless Mouse",
+    "amount": 19.99,
+    "timestamp": "2026-03-10T21:20:00Z"
+  }
+]
